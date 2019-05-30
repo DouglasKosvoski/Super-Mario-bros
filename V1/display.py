@@ -14,7 +14,7 @@ class Canvas():
         self.y = 0
         self.left_limit = 0
         self.right_limit = -6180 # background image width
-        self.speed = play.speed
+        self.speed = player.Player.speed
 
 
     def show(self):

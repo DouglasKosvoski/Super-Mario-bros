@@ -1,6 +1,8 @@
 import pygame
+from player import *
 from event import *
 from display import *
+
 
 bkgd = Canvas()
 ev = Event()

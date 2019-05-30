@@ -1,6 +1,7 @@
 import pygame
 
 class Player:
+    speed = 8
     def __init___(self):
         self.image = pygame.image.load('world.png')
         self.width = 30
@@ -9,7 +10,6 @@ class Player:
         self.y = 400
         # self.left_limit = 0
         # self.right_limit = -6180 # background image width
-        self.speed = 10
 
     def show(self):
         self.display.blit(self.image, (self.x, self.y))
