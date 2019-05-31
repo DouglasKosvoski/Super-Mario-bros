@@ -13,30 +13,36 @@ class Canvas():
         self.x = 0
         self.y = 0
         self.left_limit = 0
-        self.right_limit = -6180 # background image width
+        self.right_limit = -6180
         self.speed = player.Player().xspeed
-        self.var = 0
-        self.rot = False
+        self.var = 0     # which frame will be displayed
+        self.rot = False # rotation
+        self.jum = False # jumping
+        self.anim_speed = 0.15
 
     def show(self):
         self.caption = pygame.display.set_caption('Super Mario Bros - %.1f' % (self.time.get_fps()))
         self.display.blit(self.image, (self.x, self.y))
 
+        if pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_UP]:
+            self.jum = True
+            player.Player().show(0, self.rot, jump=self.jum)
+
         if pygame.key.get_pressed()[pygame.K_d] or pygame.key.get_pressed()[pygame.K_RIGHT]:
             if self.x > self.right_limit:
                 self.x -= self.speed
                 self.rot = False
-                player.Player().show(self.var % 2, self.rot)
-
+                player.Player().show(self.var % 2, self.rot, jump=self.jum)
 
         elif pygame.key.get_pressed()[pygame.K_a] or pygame.key.get_pressed()[pygame.K_LEFT]:
             if self.x < self.left_limit:
                 self.x += self.speed
                 self.rot = True
-                player.Player().show(self.var % 2, self.rot)
+                player.Player().show(self.var % 2, self.rot, jump=self.jum)
 
         else:
-            player.Player().show(0, self.rot)
+            self.jum = False
+            player.Player().show(0, self.rot, jump=self.jum)
 
-        self.var += 0.15
+        self.var += self.anim_speed
         return self.x

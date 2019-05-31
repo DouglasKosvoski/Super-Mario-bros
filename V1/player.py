@@ -9,12 +9,10 @@ sprites_rotated = [pygame.image.load('images/idle_rotated.png'),
         pygame.image.load('images/runing01_rotated.png'),
         pygame.image.load('images/runing02_rotated.png')]
 
-jumping = [
-
-]
+jumping = [pygame.image.load('images/jumping_rotated.png'),
+        pygame.image.load('images/jumping.png')]
 
 class Player:
-
     def __init__(self):
         self.xspeed = 5
         self.width = 45
@@ -26,10 +24,7 @@ class Player:
         self.sup_limit = 200
         self.inf_limit = 400+2-self.height-2
         self.accel = 0.1
-        # self.rotated = False
-        # print('iinit')
 
-    # @staticmethod
     def jump(self):
 
         if self.on_ground == True:
@@ -48,9 +43,17 @@ class Player:
 
         return self.y
 
-    def show(self, a, rotated=False):
+    def show(self, a, rotated=False, jump=False):
         a = int(a)
-        if rotated == True:
-            Canvas.display.blit(sprites_rotated[a], (self.x, self.y))
+
+        if jump == True:
+            if rotated == True:
+                Canvas.display.blit(jumping[0], (self.x, self.y))
+            else:
+                Canvas.display.blit(jumping[1], (self.x, self.y))
+
         else:
-            Canvas.display.blit(sprites[a], (self.x, self.y))
+            if rotated == True:
+                Canvas.display.blit(sprites_rotated[a], (self.x, self.y))
+            else:
+                Canvas.display.blit(sprites[a], (self.x, self.y))

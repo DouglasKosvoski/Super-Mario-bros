@@ -10,6 +10,7 @@ class Event():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+                
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
