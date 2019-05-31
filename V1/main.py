@@ -5,12 +5,14 @@ from display import *
 
 
 bkgd = Canvas()
-ev = Event()
 play = Player()
+ev = Event()
 
 while True:
     bkgd.show()
     bkgd.move()
+    play.show()
+    play.jump()
     ev.check_event()
 
 

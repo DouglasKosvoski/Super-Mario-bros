@@ -1,4 +1,5 @@
 import pygame
+import player
 
 class Event():
     def __init__(self):
@@ -11,7 +12,7 @@ class Event():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
