@@ -8,7 +8,7 @@ ev = event.Event()
 
 while True:
     bkgd.show()
-    play.show()
+    # play.show()
     ev.check_event()
     # play.jump()
     bkgd.time.tick(bkgd.fps)
