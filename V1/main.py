@@ -1,20 +1,15 @@
-import pygame
-from player import *
-from event import *
-from display import *
+import pygame, player
+import event, display
 
 
-bkgd = Canvas()
-play = Player()
-ev = Event()
+bkgd = display.Canvas()
+play = player.Player()
+ev = event.Event()
 
 while True:
     bkgd.show()
-    bkgd.move()
     play.show()
-    play.jump()
     ev.check_event()
-
-
+    # play.jump()
     bkgd.time.tick(bkgd.fps)
     pygame.display.update()
