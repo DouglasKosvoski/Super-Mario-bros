@@ -1,14 +1,14 @@
 import pygame, player, event, display
 
 
-bkgd = display.Canvas()
 play = player.Player()
+bkgd = display.Canvas(play)
 ev = event.Event()
 
 while True:
 
-    bkgd.show()
-    ev.check_event()
-    
+    bkgd.show(play)
+    ev.check_event(play)
+
     bkgd.time.tick(bkgd.fps)
     pygame.display.update()
