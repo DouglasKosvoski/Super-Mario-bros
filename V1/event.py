@@ -1,5 +1,5 @@
 import pygame
-#import player
+
 
 class Event():
     def __init__(self):

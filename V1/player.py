@@ -13,48 +13,50 @@ jumping = [pygame.image.load('images/jumping_rotated.png'),
         pygame.image.load('images/jumping.png')]
 
 class Player:
-    play_y = 400
     def __init__(self):
-        self.xspeed = 5
+        self.xspeed = 50
         self.width = 45
         self.height = 60
         self.x = (Canvas.width/2) - (self.width/2)
+        self.y = int(400-self.height)
         self.on_ground = True
         self.yspeed = 2
         self.sup_limit = 200
-        self.inf_limit = 400+2-self.height-2
+        self.inf_limit = 400-self.height
         self.accel = 0.1
         print("ALOU")
 
     def jump(self):
+        print('player.y = ', self.y)
+        print()
 
         if self.on_ground == True:
-            self.yspeed *= -1
+            print('pullow')
             self.on_ground = False
+        else:
+            print('nao pulou')
+            if self.y <= self.sup_limit:
+                print('passou para cima')
+            elif self.y >= self.inf_limit:
+                print('passou para baixo')
+                self.on_ground = True
 
-        '''if play_y < self.sup_limit:
-            self.yspeed *= -1
+        while self.y > 0:
+            self.y -= self.yspeed
+            return self.y
 
-        elif play_y >= self.inf_limit:
-            self.on_ground = True
-            self.yspeed = 0
 
-        if play_y <= self.inf_limit:
-            play_y -= self.yspeed + -self.accel
-
-        return play_y'''
-
-    def show(self, a, rotated=False, jump=False):
-        a = int(a)
+    def show(self, frame, rotated=False, jump=False):
+        frame = int(frame)
 
         if jump == True:
             if rotated == True:
-                Canvas.display.blit(jumping[0], (self.x, 0))
+                Canvas.display.blit(jumping[0], (self.x, self.y))
             else:
-                Canvas.display.blit(jumping[1], (self.x, 0))
+                Canvas.display.blit(jumping[1], (self.x, self.y))
 
         else:
             if rotated == True:
-                Canvas.display.blit(sprites_rotated[a], (self.x, Player.play_y))
+                Canvas.display.blit(sprites_rotated[frame], (self.x, self.y))
             else:
-                Canvas.display.blit(sprites[a], (self.x,  Player.play_y))
+                Canvas.display.blit(sprites[frame], (self.x, self.y))

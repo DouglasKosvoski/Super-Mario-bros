@@ -7,12 +7,12 @@ class Canvas():
 
     def __init__(self, player):
         self.time = pygame.time.Clock()
-        self.fps = 60
+        self.fps = 600
         self.image = pygame.image.load('images/world.png')
         self.x = 0
         self.y = 0
         self.left_limit = 0
-        self.right_limit = -6180
+        self.right_limit = -6120
         self.speed = player.xspeed
         self.var = 0     # which frame will be displayed
         self.rot = False # rotation
@@ -40,7 +40,7 @@ class Canvas():
                 player.show(self.var % 2, self.rot, jump=self.jum)
 
         else:
-            self.jum = False
+            # self.jum = False
             player.show(0, self.rot, jump=self.jum)
 
         self.var += self.anim_speed

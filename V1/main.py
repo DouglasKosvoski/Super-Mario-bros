@@ -1,4 +1,5 @@
-import pygame, player, event, display
+import pygame
+import player, event, display
 
 
 play = player.Player()
@@ -9,6 +10,7 @@ while True:
 
     bkgd.show(play)
     ev.check_event(play)
+    # print(play.y)
 
     bkgd.time.tick(bkgd.fps)
     pygame.display.update()
