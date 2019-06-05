@@ -9,8 +9,8 @@ ev = event.Event()
 while True:
 
     bkgd.show(play)
-    ev.check_event(play)
-    # print(play.y)
+    ev.check_event(play, bkgd)
+    print(play.y)
 
     bkgd.time.tick(bkgd.fps)
     pygame.display.update()
