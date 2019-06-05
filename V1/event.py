@@ -17,4 +17,7 @@ class Event():
                     quit()
 
                 elif event.key == pygame.K_SPACE or event.key == pygame.K_UP:
-                    player.jump()
+                    player.on_ground = False
+
+        if player.on_ground == False:
+            player.jump()

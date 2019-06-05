@@ -7,7 +7,7 @@ class Canvas():
 
     def __init__(self, player):
         self.time = pygame.time.Clock()
-        self.fps = 600
+        self.fps = 60
         self.image = pygame.image.load('images/world.png')
         self.x = 0
         self.y = 0
@@ -20,8 +20,11 @@ class Canvas():
         self.anim_speed = 0.15
 
     def show(self, player):
+        # display title and fps
         self.caption = pygame.display.set_caption('Super Mario Bros - %.1f' % (self.time.get_fps()))
+        # draw the background
         self.display.blit(self.image, (self.x, self.y))
+
 
         if pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_UP]:
             self.jum = True
@@ -40,7 +43,7 @@ class Canvas():
                 player.show(self.var % 2, self.rot, jump=self.jum)
 
         else:
-            # self.jum = False
+            self.jum = False
             player.show(0, self.rot, jump=self.jum)
 
         self.var += self.anim_speed

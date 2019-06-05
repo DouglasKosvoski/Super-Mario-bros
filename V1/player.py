@@ -14,36 +14,32 @@ jumping = [pygame.image.load('images/jumping_rotated.png'),
 
 class Player:
     def __init__(self):
-        self.xspeed = 50
+        self.xspeed = 5
         self.width = 45
         self.height = 60
         self.x = (Canvas.width/2) - (self.width/2)
         self.y = int(400-self.height)
         self.on_ground = True
-        self.yspeed = 2
-        self.sup_limit = 200
+        self.yspeed = 7
+        self.sup_limit = 150
         self.inf_limit = 400-self.height
-        self.accel = 0.1
+        self.accel = 0
         print("ALOU")
 
     def jump(self):
         print('player.y = ', self.y)
-        print()
 
-        if self.on_ground == True:
-            print('pullow')
-            self.on_ground = False
-        else:
-            print('nao pulou')
-            if self.y <= self.sup_limit:
-                print('passou para cima')
-            elif self.y >= self.inf_limit:
-                print('passou para baixo')
-                self.on_ground = True
+        if self.y < self.sup_limit:
+            self.yspeed *= -1
 
-        while self.y > 0:
-            self.y -= self.yspeed
-            return self.y
+        elif self.y > self.inf_limit:
+            self.y = self.inf_limit
+            self.on_ground = True
+            self.yspeed *= -1
+
+        self.y -= self.yspeed
+        # self.yspeed += self.accel
+        return self.y
 
 
     def show(self, frame, rotated=False, jump=False):
