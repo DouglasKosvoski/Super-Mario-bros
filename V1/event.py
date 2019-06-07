@@ -6,7 +6,7 @@ class Event():
         pygame.key.set_repeat(1,1)
 
 
-    def check_event(self, player, bkgd):
+    def check_event(self, player, bkgd, hit_boxes):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -33,6 +33,7 @@ class Event():
                 # rotate player to face left direction
                 player.rotated = True
                 player.show(player.frame % 2, player.rotated, jump=player.on_ground)
+                hit_boxes.move_left(bkgd)
 
         # key 'd' or RIGHT ARROW
         elif pygame.key.get_pressed()[pygame.K_d] or pygame.key.get_pressed()[pygame.K_RIGHT]:
@@ -42,7 +43,7 @@ class Event():
                 # rotate player to normal position (right)
                 player.rotated = False
                 player.show(player.frame % 2, player.rotated, jump=player.on_ground)
-
+                hit_boxes.move_right(bkgd)
         else:
             # show player as idle position but rotation matters
             player.show(0, player.rotated, jump=player.on_ground)
