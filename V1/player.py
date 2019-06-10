@@ -21,8 +21,8 @@ class Player:
         self.height = 60
         self.x = int((Canvas.width/2) - (self.width/2))
         self.y = int(400-self.height)
-        self.sup_limit = 150
         self.inf_limit = 400-self.height
+        self.sup_limit = 160
 
         self.speed_animation = 0.15
         self.on_ground = True
@@ -30,7 +30,7 @@ class Player:
         self.frame  = 0
 
         self.xspeed = 5
-        self.yspeed = 5
+        self.yspeed = 8
         self.accel  = 0
 
     # makes player jump
@@ -76,6 +76,10 @@ class Player:
 
             # no eixo - X
             if spx < self.x and self.x < spx + spw or spx < self.x + self.width and self.x + self.width < spx + spw:
+                if self.y < spy:                            #####
+                    self.inf_limit = spy                    #####
+                    self.y = spy - self.height - 1          #####
+                    # self.on_ground = True                 #####
                 # no eixo - Y
                 if spy < self.y and self.y < spy + sph:
                     obj.special_block.pop(-b)
@@ -89,9 +93,16 @@ class Player:
 
             # no eixo - X
             if bpx < self.x and self.x < bpx + bpw or bpx < self.x + self.width and self.x + self.width < bpx + bpw:
+                if self.y < bpy:                            #####
+                    self.inf_limit = bpy                    #####
+                    self.y = bpy - self.height - 1          #####
+                    # self.on_ground = True                 #####
+
                 # no eixo - Y
                 if bpy < self.y and self.y < bpy + bph:
                     obj.brick_block.pop(-c)
+
+
 
     # function that handle the frames animation of player
     def show(self, frame, rotated=False, jump=False):
