@@ -1,6 +1,0 @@
-things to solve:
-
-    gravity is not acting properly
-    player is not jumping while in a platform (due to limit issues)
-
-    create a "you win" message when player reaches final flag
