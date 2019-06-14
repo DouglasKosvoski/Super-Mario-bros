@@ -2,10 +2,11 @@ import pygame
 
 class Canvas():
     width  = 600
-    height = 450
+    height = 448
     display = pygame.display.set_mode((width, height))
 
     def __init__(self, player):
+        # load image backgroud
         self.image = pygame.image.load('images/world.png')
         self.time  = pygame.time.Clock()
         self.fps = 60
@@ -14,7 +15,7 @@ class Canvas():
         self.x = 0
         self.y = 0
         self.left_limit  = 0
-        self.right_limit = -6120
+        self.right_limit = -3450
 
     def show(self, player):
         # display title and fps
