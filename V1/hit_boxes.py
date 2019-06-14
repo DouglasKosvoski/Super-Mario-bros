@@ -7,10 +7,6 @@ class HitBox:
         self.special_image = pygame.image.load('images/special_brick.png')
         self.width = 30
 
-        # holes vertices
-        self.holes =[
-                [1920, 1965], [2460, 2535], [4605, 4645]]
-
         # special block vertices x, y
         self.special_block = [
                 [510, 270], [670,270], [700,145], [730,270],
@@ -29,6 +25,13 @@ class HitBox:
                 [4080,145],[4110,270],[4140,270],[4170,145],
                 [5370,270],[5400,270],[5460,270]]
 
+        # this matrix will be modified throughout the execution
+        self.pipe = [[620,335],[940,300],[1195,275],[1545,275],[4935,335],[5445,335]]
+        # this version remains untouchable
+        self.pipe_copy = [[620,335],[940,300],[1195,275],[1545,275],[4935,335],[5445,335]]
+
+
+
     # display the blocks through the matrix
     def show(self, display):
         for b in range(len(self.brick_block)):
@@ -45,6 +48,9 @@ class HitBox:
         for j in range(len(self.special_block)):
             self.special_block[j][0] -= bkgd.speed
 
+        for k in range(len(self.pipe)):
+            self.pipe[k][0] -= bkgd.speed
+
     # makes every single block move along with the background
     def move_left(self, bkgd):
         for i in range(len(self.brick_block)):
@@ -52,3 +58,6 @@ class HitBox:
 
         for j in range(len(self.special_block)):
             self.special_block[j][0] += bkgd.speed
+
+        for k in range(len(self.pipe)):
+            self.pipe[k][0] += bkgd.speed
