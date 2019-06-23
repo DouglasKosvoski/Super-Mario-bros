@@ -1,7 +1,7 @@
 import pygame
 from display import *
 
-# load sprite frames for the animation
+# load sprite frames for the player animation
 sprites = [pygame.image.load('images/idle.png'),
         pygame.image.load('images/runing01.png'),
         pygame.image.load('images/runing02.png')]
@@ -17,57 +17,70 @@ jumping = [pygame.image.load('images/jumping_rotated.png'),
 class Player:
     # initializes player variables
     def __init__(self):
-        self.width  = 45
-        self.height = 60
+        # image dimensions
+        self.width  = 76
+        self.height = 64
+        # start pos on the screen
         self.x = int((Canvas.width/2) - (self.width/2))
-        self.y = int(400-self.height)
-        self.jump_height = 120
-        self.inf_limit = 400-self.height                        # where the player will stand
-        self.sup_limit = self.inf_limit - self.jump_height      # how high can player jump
+        self.y = int(Canvas.height/1.116) - self.height
 
-        self.speed_animation = 0.15
-        self.on_ground = True           # player starts on the ground
-        self.rotated = False            # player is facing right
-        self.frame  = 0
+        # xspeed is constant... yspeed will be modified when jumping
+        self.xspeed = 8
+        self.yspeed = 20
+        # force that will bring player back to the ground
+        self.gravity  = -1
+        # set 'where is the ground' for player to stand
+        self.inf_limit = 600 - self.height
+
+        # variables of player sprite controls
+        self.on_ground = True
+        self.rotated = False
         self.facing_wall = False
+        self.speed_animation = 0.18
+        self.frame  = 0
 
-        self.xspeed = 5
-        self.yspeed = 8
-        self.accel  = -0.5
 
-    # makes player jump
+    # player jump
     def jump(self):
-        if self.y < self.sup_limit:
-            self.yspeed *= -1
-
-        elif self.y > self.inf_limit:
-            self.y = int(407-self.height)
+        # if player is under the ground
+        if self.y > self.inf_limit:
+            # realocate player Y-axi
+            self.y = int(600-self.height-self.yspeed)
+            # tell the player to keep stand
             self.on_ground = True
-            self.yspeed = 8
+            # redefine speed due to gravity influence
+            self.yspeed = 20
 
+        # player goes up
         self.y -= self.yspeed
-        self.yspeed += self.accel
-        return self.y
+        # add gravity to Y-axi
+        self.yspeed += self.gravity
+
 
     # detect if player is in collision with anything
     def collision(self, bkgd, obj):
-        # standart brick
+        # for each block in matrix hitbox
         for c in range(0, len(obj.brick_block)):
             bpx = obj.brick_block[-c][0]
             bpy = obj.brick_block[-c][1]
-            bpw, bph = 30, 30
+            # block dimensions
+            bpw, bph = 45, 45
 
-            # no eixo - X
-            if bpx < self.x and self.x < bpx + bpw or bpx < self.x + self.width and self.x + self.width < bpx + bpw:
-                if self.y < bpy:
-                    self.inf_limit = bpy
-                    self.y = bpy - self.height - 1
-                    self.on_ground = True
+            # detect if player is in the same X
+                # left player corner
+            if (bpx < self.x and self.x < bpx + bpw or
+                # right player corner
+                bpx < self.x + self.width and self.x + self.width < bpx + bpw or
+                # if center if in the same X but corners are outside
+                self.x < bpx and self.x + self.width > bpx + bpw):
 
-                # no eixo - Y
-                if bpy < self.y and self.y < bpy + bph: # player is in the same y as the block
-                    obj.brick_block.pop(-c)             # delete collected block
-                    obj.qtd_blocks -= 1                 # remove one from remaing blocks to collect
+                # detect if player is in the same Y
+                if bpy < self.y and self.y < bpy + bph:
+                    # if it is delete item from matrix
+                    obj.brick_block.pop(-c)
+                    # remove one from remaing blocks to collect
+                    obj.qtd_blocks -= 1
+
 
     # function that handle the frames animation of player
     def show(self, frame, rotated=False, jump=False):
@@ -87,6 +100,6 @@ class Player:
 
     # check if player completed the level
     def win(self, bkgd):
-        if bkgd.x < -3430:
+        if bkgd.x < -5145:
             return True
         return False
