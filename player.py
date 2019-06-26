@@ -1,5 +1,7 @@
-import pygame
+import pygame, time
 from display import *
+import display_msg as msg                   # import function from file
+
 
 # load sprite frames for the player animation
 sprites = [pygame.image.load('images/idle.png'),
@@ -35,7 +37,6 @@ class Player:
         # variables of player sprite controls
         self.on_ground = True
         self.rotated = False
-        self.facing_wall = False
         self.speed_animation = 0.18
         self.frame  = 0
 
@@ -59,12 +60,12 @@ class Player:
 
     # detect if player is in collision with anything
     def collision(self, bkgd, obj):
-        # for each block in matrix hitbox
-        for c in range(0, len(obj.brick_block)):
-            bpx = obj.brick_block[-c][0]
-            bpy = obj.brick_block[-c][1]
-            # block dimensions
-            bpw, bph = 45, 45
+        # for each coin in matrix hitbox
+        for c in range(0, len(obj.coin)):
+            bpx = obj.coin[-c][0]
+            bpy = obj.coin[-c][1]
+            # coin dimensions
+            bpw, bph = 45, 60
 
             # detect if player is in the same X
                 # left player corner
@@ -77,9 +78,9 @@ class Player:
                 # detect if player is in the same Y
                 if bpy < self.y and self.y < bpy + bph:
                     # if it is delete item from matrix
-                    obj.brick_block.pop(-c)
-                    # remove one from remaing blocks to collect
-                    obj.qtd_blocks -= 1
+                    obj.coin.pop(-c)
+                    # remove one from remaing coins to collect
+                    obj.qtd_coin -= 1
 
 
     # function that handle the frames animation of player
@@ -98,8 +99,16 @@ class Player:
             else:
                 Canvas.display.blit(sprites[frame], (self.x, self.y))
 
-    # check if player completed the level
-    def win(self, bkgd):
+    # detect if player collected all the items and is in the end of the level
+    def win(self, bkgd, coins):
         if bkgd.x < -5145:
-            return True
-        return False
+            if coins.qtd_coin < 1:                                  # if it collected all coins
+                msg.message_display('You Win!', bkgd)               # show message
+                time.sleep(2)                                       # freeze the screen for 2 seconds
+                pygame.quit()                                       # exit the game
+            else:                                                   # if player didn't collect all
+                bkgd.x = -5145                                      # reset it a few pixels before the end
+                msg.message_display('Not Yet!', bkgd)               # display a warning
+                time.sleep(0.5)                                     # freeze for half a second
+        else:                                                       # if player is not in the end
+            msg.message_display('%d' % (coins.qtd_coin), bkgd)      # display how many coins left
